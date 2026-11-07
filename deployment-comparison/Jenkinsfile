@@ -5,15 +5,17 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                dir('deployment-comparison') {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Deploy Application') {
             steps {
-                sh '''
-                    nohup node server.js > app.log 2>&1 &
-                '''
+                dir('deployment-comparison') {
+                    sh 'nohup node server.js > app.log 2>&1 &'
+                }
             }
         }
 
@@ -26,6 +28,8 @@ pipeline {
                         fi
                         sleep 2
                     done
+
+                    echo "Deployment verification failed"
                     exit 1
                 '''
             }
