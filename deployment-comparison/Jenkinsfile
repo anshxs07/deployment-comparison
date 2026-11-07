@@ -28,8 +28,6 @@ pipeline {
                         fi
                         sleep 2
                     done
-
-                    echo "Deployment verification failed"
                     exit 1
                 '''
             }
