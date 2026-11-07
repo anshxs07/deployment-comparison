@@ -2,12 +2,11 @@
 pipeline {
     agent any
 
-    environment {
-        PATH+NODE = '/opt/homebrew/bin'
-    }
-
     stages {
         stage('Install Dependencies') {
+            environment {
+                PATH = "/opt/homebrew/bin:${env.PATH}"
+            }
             steps {
                 dir('deployment-comparison') {
                     sh '''
@@ -20,6 +19,9 @@ pipeline {
         }
 
         stage('Deploy Application') {
+            environment {
+                PATH = "/opt/homebrew/bin:${env.PATH}"
+            }
             steps {
                 dir('deployment-comparison') {
                     sh '''
